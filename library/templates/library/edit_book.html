@@ -1,0 +1,110 @@
+{% extends 'library/base.html' %}
+
+{% block title %}Редактировать книгу - Личная библиотека{% endblock %}
+
+{% block content %}
+<h1>Редактировать книгу</h1>
+<div class="action-buttons">
+    <a href="{% url 'delete_book' book.id %}" class="btn-delete">🗑️ Удалить книгу</a>
+</div>
+
+<div class="form-container">
+    <form method="POST" enctype="multipart/form-data" class="book-form">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label>Название книги:*</label>
+            {{ form.title }}
+            {% if form.title.errors %}
+                <div class="error">{{ form.title.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-section">
+            <h3>Автор книги</h3>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for=>Выберите существующего автора:</label>
+                    {{ form.author }}
+                    {% if form.author.errors %}
+                        <div class="error">{{ form.author.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label>{{ form.new_author.label }}</label>
+                    {{ form.new_author }}
+                    {% if form.new_author.errors %}
+                        <div class="error">{{ form.new_author.errors }}</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3>Жанр книги</h3>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Выберите существующий жанр:</label>
+                    {{ form.genre }}
+                    {% if form.genre.errors %}
+                        <div class="error">{{ form.genre.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label>{{ form.new_genre.label }}</label>
+                    {{ form.new_genre }}
+                    {% if form.new_genre.errors %}
+                        <div class="error">{{ form.new_genre.errors }}</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>Год издания:*</label>
+                {{ form.year }}
+                {% if form.year.errors %}
+                    <div class="error">{{ form.year.errors }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Аннотация:</label>
+            {{ form.annotation }}
+            {% if form.annotation.errors %}
+                <div class="error">{{ form.annotation.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label>Рецензия:</label>
+            {{ form.review }}
+            {% if form.review.errors %}
+                <div class="error">{{ form.review.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label>Обложка:</label>
+            {{ form.cover }}
+            {% if form.cover.errors %}
+                <div class="error">{{ form.cover.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-help">
+            <p><small>* Обязательные поля</small></p>
+            <p><small>Вы можете выбрать автора/жанр из списка ИЛИ ввести нового</small></p>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn-primary">Сохранить изменения</button>
+            <a href="{% url 'book_detail' book.id %}" class="btn-secondary">Отмена</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

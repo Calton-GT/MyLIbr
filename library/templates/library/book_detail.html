@@ -1,0 +1,48 @@
+{% extends 'library/base.html' %}
+
+{% block title %}{{ book.title }} - Личная библиотека{% endblock %}
+
+{% block content %}
+<a href="{% url 'home' %}" class="back-link">← Назад к списку</a>
+
+<!-- Блок кнопок действий -->
+<div class="action-buttons">
+    <a href="{% url 'edit_book' book.id %}" class="btn-edit">✏️ Редактировать книгу</a>
+    <a href="{% url 'delete_book' book.id %}" class="btn-delete">🗑️ Удалить книгу</a>
+</div>
+
+<div class="book-detail">
+    <!-- остальной код остается таким же -->
+    <div class="book-header">
+        <div class="book-cover-large">
+            {% if book.cover %}
+                <img src="{{ book.cover.url }}" alt="{{ book.title }}">
+            {% else %}
+                <div class="no-cover-large">📖</div>
+            {% endif %}
+        </div>
+        <div class="book-meta">
+            <h1>{{ book.title }}</h1>
+            <p class="author">{{ book.author.name }}</p>
+            <div class="book-tags">
+                {% if book.genre %}
+                <span class="tag">{{ book.genre.name }}</span>
+                {% endif %}
+                <span class="tag">{{ book.year }} год</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="book-content">
+        <section class="annotation">
+            <h2>Аннотация</h2>
+            <p>{{ book.annotation|default:"Аннотация отсутствует"|linebreaks }}</p>
+        </section>
+
+        <section class="review">
+            <h2>Моя рецензия</h2>
+            <p>{{ book.review|default:"Рецензия пока не написана"|linebreaks }}</p>
+        </section>
+    </div>
+</div>
+{% endblock %}

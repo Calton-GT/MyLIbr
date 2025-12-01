@@ -1,0 +1,42 @@
+{% extends 'library/base.html' %}
+
+{% block title %}Удалить книгу - Личная библиотека{% endblock %}
+
+{% block content %}
+<div class="confirmation-container">
+    <h1>Подтверждение удаления</h1>
+    
+    <div class="warning-message">
+        <div class="warning-icon">⚠️</div>
+        <h2>Вы уверены, что хотите удалить эту книгу?</h2>
+        <p>Это действие нельзя отменить. Все данные о книге будут удалены.</p>
+    </div>
+    
+    <div class="book-preview">
+        <div class="preview-cover">
+            {% if book.cover %}
+                <img src="{{ book.cover.url }}" alt="{{ book.title }}">
+            {% else %}
+                <div class="no-cover-small">📖</div>
+            {% endif %}
+        </div>
+        <div class="preview-info">
+            <h3>{{ book.title }}</h3>
+            <p class="author">{{ book.author.name }}</p>
+            <p class="meta">
+                {% if book.genre %}{{ book.genre.name }} • {% endif %}
+                {{ book.year }} год
+            </p>
+        </div>
+    </div>
+    
+    <div class="confirmation-actions">
+        <form method="POST" class="delete-form">
+            {% csrf_token %}
+            <button type="submit" class="btn-danger">Да, удалить книгу</button>
+            <a href="{% url 'book_detail' book.id %}" class="btn-secondary">Нет, отменить</a>
+            <a href="{% url 'home' %}" class="btn-secondary">Вернуться на главную</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

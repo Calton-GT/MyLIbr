@@ -1,0 +1,29 @@
+{% extends 'library/base.html' %}
+
+{% block title %}Статистика - Личная библиотека{% endblock %}
+
+{% block content %}
+<h1>Статистика библиотеки</h1>
+
+<div class="stats-container">
+    <div class="stat-card">
+        <div class="stat-number">{{ total_books }}</div>
+        <div class="stat-label">Всего книг</div>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-number">{{ total_authors }}</div>
+        <div class="stat-label">Авторов</div>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-number">{{ total_genres }}</div>
+        <div class="stat-label">Жанров</div>
+    </div>
+</div>
+
+<div class="stats-message">
+    <h2>В моей библиотеке {{ total_books }} книг</h2>
+    <p>Я продолжаю собирать свою коллекцию и делиться рецензиями на прочитанные произведения.</p>
+</div>
+{% endblock %}
