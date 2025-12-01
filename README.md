@@ -24,5 +24,25 @@
 
 1. **Клонируйте репозиторий:**
    ```bash
-   git clone https://github.com/ваш-username/mylibr.git
-   cd mylibr
+   git clone https://github.com/Calton-GT/MyLIbr.git
+   cd MyLIbr
+2. **Создайте виртуальное окружение (рекомендуется)**
+    ```bash
+    py -m venv venv
+    venv\Scripts\activate
+
+3. **Установите зависимости**
+    ```bash
+    pip install -r requirements.txt
+
+4. **Выполните миграции**
+    ```bash
+    py manage.py migrate
+
+5. **Создайте тестовые данные**
+    ```bash
+    py manage.py shell -c "from library.views import create_sample_data; create_sample_data()"
+
+6. **Запустите сервер**
+    ```bash
+    py manage.py runserver
