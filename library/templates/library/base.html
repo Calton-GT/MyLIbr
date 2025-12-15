@@ -14,7 +14,13 @@
             <div class="nav-links">
                 <a href="{% url 'home' %}">Главная</a>
                 <a href="{% url 'statistics' %}">Статистика</a>
-                <a href="{% url 'add_book' %}">Добавить книгу</a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'add_book' %}">Добавить книгу</a>
+                    <a href="{% url 'account_logout' %}">Выход</a>
+                {% else %}
+                    <a href="{% url 'account_login' %}">Вход</a>
+                    <a href="{% url 'account_signup' %}">Регистрация</a>
+                {% endif %}
             </div>
         </div>
     </nav>

@@ -1,0 +1,16 @@
+{% extends "library/base.html" %}
+
+{% block title %}Письмо отправлено{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <h1>Письмо отправлено</h1>
+    
+    <p>Проверьте вашу почту и перейдите по ссылке для подтверждения.</p>
+    
+    <div class="auth-links">
+        <a href="{% url 'home' %}">На главную</a>
+    </div>
+</div>
+{% endblock %}
+

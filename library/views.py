@@ -1,10 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 from .models import Book, Author, Genre
 from .forms import BookForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
+@login_required
 def delete_book(request, book_id):
     """Удаление книги с подтверждением"""
     book = get_object_or_404(Book, id=book_id)
@@ -64,6 +66,7 @@ def statistics(request):
     })
 
 
+@login_required
 def add_book(request):
     """Страница для добавления новой книги"""
     if request.method == 'POST':
@@ -77,6 +80,7 @@ def add_book(request):
     return render(request, 'library/add_book.html', {'form': form})
 
 
+@login_required
 def edit_book(request, book_id):
     """Редактирование существующей книги"""
     book = get_object_or_404(Book, id=book_id)

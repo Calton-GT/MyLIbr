@@ -37,6 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',  # Требуется для allauth
+    
+    # allauth
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    
     'library',
 ]
 
@@ -46,6 +53,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'allauth.account.middleware.AccountMiddleware',  # Требуется для allauth
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -59,6 +67,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
@@ -127,3 +136,31 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# allauth settings
+SITE_ID = 1
+
+AUTHENTICATION_BACKENDS = [
+    # Необходимо для входа по username в Django admin, независимо от allauth
+    'django.contrib.auth.backends.ModelBackend',
+    # Специальные методы аутентификации allauth, такие как вход по e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+# Настройки allauth
+ACCOUNT_LOGIN_METHODS = {'email'}  # Использовать email для входа
+ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1*', 'password2*']  # Поля для регистрации
+ACCOUNT_UNIQUE_EMAIL = True  # Уникальный email
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'  # Обязательная верификация email
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+ACCOUNT_RATE_LIMITS = {
+    'login_failed': '5/m'  # 5 попыток входа в минуту
+}
+
+# Настройки для удобства разработки (в продакшене можно изменить)
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # Вывод email в консоль для разработки
+
+# URL перенаправления после входа/выхода
+LOGIN_REDIRECT_URL = '/'  # После входа перенаправлять на главную
+ACCOUNT_LOGOUT_REDIRECT_URL = '/'  # После выхода перенаправлять на главную
+ACCOUNT_LOGOUT_ON_GET = True  # Разрешить выход через GET запрос
