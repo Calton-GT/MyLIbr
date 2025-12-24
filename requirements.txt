@@ -1,8 +1,4 @@
-Django>=4.2
-Pillow>=10.0.0
-django-allauth>=0.57.0
-
-
-
-
-
+Django==5.2.8
+django-allauth==65.13.1
+Pillow==10.4.0
+psycopg2-binary==2.9.9
